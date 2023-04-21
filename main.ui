@@ -92,9 +92,6 @@
     <property name="maximum">
      <double>400.000000000000000</double>
     </property>
-    <property name="stepType">
-     <enum>QAbstractSpinBox::DefaultStepType</enum>
-    </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
@@ -167,7 +164,7 @@
      <number>200</number>
     </property>
    </widget>
-   <widget class="QSpinBox" name="hipSpinBox">
+   <widget class="QSpinBox" name="hipsSpinBox">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -302,7 +299,7 @@
     <property name="locale">
      <locale language="Finnish" country="Finland"/>
     </property>
-    <property name="placeholderText">
+    <property name="placeholderText" stdset="0">
      <string>Valitse sukupuoli</string>
     </property>
     <item>
@@ -331,7 +328,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Painoindeksi</string>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="fatFiLabel">
@@ -349,7 +346,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Rasvaprosentti (FI)</string>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="fatUsLabel">
@@ -367,7 +364,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Rasvaprosentti (US)</string>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_11">
@@ -388,7 +385,7 @@
      <rect>
       <x>20</x>
       <y>260</y>
-      <width>101</width>
+      <width>121</width>
       <height>16</height>
      </rect>
     </property>
@@ -401,7 +398,7 @@
      <rect>
       <x>170</x>
       <y>260</y>
-      <width>101</width>
+      <width>121</width>
       <height>16</height>
      </rect>
     </property>
@@ -429,7 +426,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

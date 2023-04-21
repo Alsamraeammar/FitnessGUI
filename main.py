@@ -43,9 +43,9 @@ class MainWindow(QW.QMainWindow):
         self.neckSB.valueChanged.connect(self.activateCalculatePB)
         self.waistSB = self.waistSpinBox
         self.waistSB.valueChanged.connect(self.activateCalculatePB)
-        self.hipSB = self.hipSpinBox
-        self.hipSB.setEnabled(False)
-        self.hipSB.valueChanged.connect(self.activateCalculatePB)
+        self.hipsSB = self.hipsSpinBox
+        self.hipsSB.setEnabled(False)
+        self.hipsSB.valueChanged.connect(self.activateCalculatePB)
         
         # TODO: Disable Calculate button until values have been edited
         # self.calculatePB = self.calculatePushButton
@@ -86,12 +86,12 @@ class MainWindow(QW.QMainWindow):
             self.calculatePB.setEnabled(False)
 
         if self.genderCB.currentText() == 'Nainen':
-            self.hipSB.setEnabled(True)
+            self.hipsSB.setEnabled(True)
 
-            if self.hipSB.value() == 50:
+            if self.hipsSB.value() == 50:
                 self.calculatePB.setEnabled(False)
         else:
-            self.hipSB.setEnabled(False)
+            self.hipsSB.setEnabled(False)
 
 
     # Calculates BMI, Finnish and US fat percentages and updates corresponding labels
@@ -118,35 +118,30 @@ class MainWindow(QW.QMainWindow):
         
         # Calculate time difference using our home made tools
         age = timetools.datediff2(birthday, dateOfWeighing, 'year')
-
-
         neck = self.neckSB.value()
         waist = self.waistSB.value()
-        hip = self.hipSB.value()
+        hips = self.hipsSB.value()
 
-        if age >= 18:
-            # Create an athlete from Kuntoilija class for age 18 or above
-            athlete = kuntoilija.Kuntoilija(name, height, weight, age, gender, dateOfWeighing)
-
-        else:
-            # Create the athlete from JunioriKuntoilija class for age under 18
-            athlete = kuntoilija.JunioriKuntoilija(name, height, weight, age, gender)
+        athlete = kuntoilija.Kuntoilija(name, height, weight, age, gender, neck, waist, hips, dateOfWeighing)
         
         bmi = athlete.bmi
         self.bmiLabel.setText(str(bmi))
 
-        fiFatPercentage = athlete.rasvaprosentti()
-
-        if gender == 1:
-            usaFatPercentage = athlete.usa_rasvaprosentti_mies(height, waist, neck)
-        else:
-            usaFatPercentage = athlete.usa_rasvaprosentti_nainen(height, waist, hip, neck)
+        fiFatPercentage = athlete.fi_rasva
+        usaFatPercentage = athlete.usa_rasva
+        
 
         # Set fat percentage labels
         self.fatFiLabel.setText(str(fiFatPercentage))
         self.fatUsLabel.setText(str(usaFatPercentage))
 
-    # TODO: Make this method to save results to a disk drive
+    def constructData(self, athlete, fiFat, usaFat):
+        # A dictionary for single weighing of an athlete
+        athlete_data_row = {'nimi': athlete.nimi, 'pituus': athlete.pituus, 'paino': athlete.paino,
+                'ika': athlete.ika, 'sukupuoli': athlete.sukupuoli, 'pvm': athlete.punnitus_paiva,
+                'bmi': athlete.bmi, 'rasvaprosenttiFi': fiFat, 'rasvaprosenttiUs': usaFat}
+        return athlete_data_row
+    
     # Saves data to disk
     def saveData(self):
         pass

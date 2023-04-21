@@ -16,7 +16,7 @@ class Kuntoilija:
     """Luokka kuntoilijan tietoja varten"""
 
     # Olionmuodostin eli konstruktori, self -> tuleva olio
-    def __init__(self, nimi, pituus, paino, ika, sukupuoli, paiva):
+    def __init__(self, nimi, pituus, paino, ika, sukupuoli, kaula, vyotaro, lantio, paiva):
 
         # Määritellään tulevan olion ominaisuudet (property) eli luokan kentät (field)
         self.nimi = nimi
@@ -24,13 +24,27 @@ class Kuntoilija:
         self.paino = paino
         self.ika = ika
         self.sukupuoli = sukupuoli
+        self.kaula = kaula
+        self.vyotaro = vyotaro
+        self.lantio = lantio
         self.bmi = fitness.laske_bmi(self.paino, self.pituus)
+        self.fi_rasva = self.rasvaprosentti()
+
+        if self.sukupuoli == 1:
+            self.usa_rasva = self.usa_rasvaprosentti_mies(self.pituus, self.vyotaro, self.kaula)
+        else:
+            self.usa_rasva = self.usa_rasvaprosentti_nainen(self.pituus, self.vyotaro, self.lantio, self.kaula)
         self.punnitus_paiva = paiva
 
     # Metodi rasvaprosentin laskemiseen (yleinen / aikuinen)
     def rasvaprosentti(self):
-        self.rasvaprosentti = fitness.aikuisen_rasvaprosentti(
+        if self.ika >= 18:
+            
+            self.rasvaprosentti = fitness.aikuisen_rasvaprosentti(
             self.bmi, self.ika, self.sukupuoli)
+
+        else:
+            self.rasvaprosentti = fitness.lapsen_rasvaprosentti(self.bmi, self.ika, self.sukupuoli)
         return self.rasvaprosentti
 
     # Metodit rasvaprosenttien laskemiseen USA:n armeijan metodeilla
@@ -94,7 +108,3 @@ if __name__ == "__main__":
     print(juniorikuntoilija.nimi, 'painaa', juniorikuntoilija.paino, 'kg')
     # print('painoindeksi on ', kuntoilija.painoindeksi())
     print('rasvaprosentti on', juniorikuntoilija.rasvaprosentti())
-    
-    ('Mika', 171, 75,60, 1, 30, 90, 0, '2023-04-21')
-    print('bmi on', kuntoilija.bmi)
-    print('Suomalainen rasvaprosentti on', kuntoilija)
